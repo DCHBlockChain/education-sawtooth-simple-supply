@@ -48,6 +48,7 @@ def make_protobuf(path, pkg_name):
         os.chdir(cwd)
 
         for proto in proto_files:
+            print(" ==== fiel: ", proto)
             src = os.path.join(SRC_DIR, proto)
             dst = os.path.join(tmp_pkg_dir, proto)
             with open(src, encoding='utf-8') as fin:
