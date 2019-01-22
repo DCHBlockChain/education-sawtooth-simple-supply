@@ -50,6 +50,7 @@ class Timer:
 
 def main():
     args = parse_args()
+    print(" >>>>>>>>args: ", args)
 
     # Search for compose file passed
     compose_file = _get_compose_file(args.compose_file)
@@ -84,6 +85,7 @@ def main():
             isolation_id,
             test_service)
     ]
+    print("compose_file  ",compose_file)
 
     compose_dict = load_compose_file(compose_file)
     _validate_compose_dict(compose_dict, test_service, compose_file)
@@ -408,6 +410,7 @@ def _get_compose_file(compose_file):
 
 if __name__ == "__main__":
     try:
+        print("======Start test=======")
         main()
 
     except RunDockerTestError as err:
