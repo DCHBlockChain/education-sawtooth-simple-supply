@@ -27,6 +27,11 @@ services:
       - ../..:/project/sawtooth-simple-supply
     command: |
       bash -c "
+        apt-get update
+        apt-get install -y curl
+        curl 'https://bootstrap.pypa.io/get-pip.py' -o '/tmp/get-pip.py'
+        python3 /tmp/get-pip.py
+        pip3 install -U protobuf
         simple-supply-protogen
         tail -f /dev/null
       "
@@ -41,6 +46,11 @@ services:
       - '../..:/project/sawtooth-simple-supply'
     command: |
       bash -c "
+        apt-get update
+        apt-get install -y curl
+        curl 'https://bootstrap.pypa.io/get-pip.py' -o '/tmp/get-pip.py'
+        python3 /tmp/get-pip.py
+        pip3 install -U protobuf
         sleep 1
         simple-supply-tp -v -C tcp://validator:4004
       "
@@ -81,6 +91,11 @@ services:
       PYTHONPATH: /project/sawtooth-simple-supply/rest_api:/project/sawtooth-simple-supply/addressing:/project/sawtooth-simple-supply/protobuf
     command: |
       bash -c "
+        apt-get update
+        apt-get install -y curl
+        curl 'https://bootstrap.pypa.io/get-pip.py' -o '/tmp/get-pip.py'
+        python3 /tmp/get-pip.py
+        pip3 install -U protobuf
         cd tests/simple_supply_tests
         python3 -m nose2 -v unit_tests
       "
