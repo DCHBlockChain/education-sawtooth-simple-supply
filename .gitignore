@@ -12,3 +12,4 @@
 
 # Webpack
 **/dist
+.idea/
