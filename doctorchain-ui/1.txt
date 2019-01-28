@@ -1,0 +1,16 @@
+echo "# api" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/doctorchain/doctorchain-UI
+git push -u origin master
+
+
+
+git remote add origin https://github.com/doctorchain/doctorchain-UI
+git push -u origin master
+
+git push origin master --force
+or short of force -f
+
+git push origin master -f

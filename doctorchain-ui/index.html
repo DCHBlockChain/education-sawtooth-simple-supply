@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>DCH</title>
+    <link rel="shortcut icon" href="src/assets/DCH-logo.png">
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui@1.4/lib/theme-default/index.css">-->
+    <!--<link rel="stylesheet" href="/node_modules/element-ui/lib/theme-chalk/index.css">-->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  </head>
+  <body style="background-color: white !important;">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+      window.onscroll = function () {
+          let profileActions = document.getElementById("actions");
+          let actionBox = document.getElementById("actionList");
+          if(!(profileActions === null || profileActions === undefined) && !(actionBox === null && actionBox === undefined)) {
+              if (window.pageYOffset > 50) {
+                  profileActions.classList.add("sticky");
+                  actionBox.classList.add("action-box");
+              } else {
+                  profileActions.classList.remove("sticky");
+                  actionBox.classList.remove("action-box");
+              }
+          }
+
+      }
+    </script>
+    <div id="app"></div>
+    <script src="/dist/build.js"></script>
+  </body>
+</html>

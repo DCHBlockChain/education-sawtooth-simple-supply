@@ -1,0 +1,27 @@
+version: "2"
+services:
+  app:
+    container_name: appUI
+    #restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    links:
+      - doctorchainapi
+
+  doctorchainapi:
+    container_name: doctorchainapi
+    image: doctorchain-api:1.0
+    ports:
+      - "5000:5000"
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo:3.6.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
