@@ -37,6 +37,6 @@ WORKDIR /project/sawtooth-simple-supply
 
 ENV PATH $PATH:/project/sawtooth-simple-supply/bin
 
-EXPOSE 8000/tcp
+EXPOSE 8000/tcp, 8000
 
 CMD ['simple-supply-rest-api']

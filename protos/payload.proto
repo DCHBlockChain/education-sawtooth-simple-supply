@@ -22,6 +22,7 @@ message SimpleSupplyPayload{
         CREATE_RECORD = 1;
         UPDATE_RECORD = 2;
         TRANSFER_RECORD = 3;
+        Data_uploader = 4;
     }
 
     // Whether the payload contains a create agent, create record,
