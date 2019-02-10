@@ -9,7 +9,8 @@
 **/package-lock.json
 **/npm-debug.log
 **/v8-compile-cache-0
-
+.idea/
 # Webpack
 **/dist
 .idea/
+*.md

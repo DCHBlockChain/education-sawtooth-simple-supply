@@ -48,8 +48,10 @@ def make_protobuf(path, pkg_name):
         os.chdir(cwd)
 
         for proto in proto_files:
+            print(" ==== file: ", proto)
             src = os.path.join(SRC_DIR, proto)
             dst = os.path.join(tmp_pkg_dir, proto)
+            print("===src_dir {}: tmp-pkg {}".format(SRC_DIR,tmp_pkg_dir))
             with open(src, encoding='utf-8') as fin:
                 with open(dst, "w", encoding='utf-8') as fout:
                     src_contents = fin.read()
@@ -62,6 +64,7 @@ def make_protobuf(path, pkg_name):
             "--python_out=%s" % os.path.join(TOP_DIR, path),
         ] + glob("%s/*.proto" % tmp_pkg_dir))
         print("Generated protobuf classes: {}".format(OUT_DIR))
+        #Generated protobuf classes: /project/sawtooth-simple-supply/protobuf/simple_supply_protobuf
 
 
 def fix_import(contents, pkg, sub_dir=False):

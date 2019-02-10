@@ -17,5 +17,6 @@
 set -e
 
 export PATH=$PATH:$(cd $(dirname $0) ; pwd)
+echo 'PATH:'$PATH
 
 run-docker-test unit-tests

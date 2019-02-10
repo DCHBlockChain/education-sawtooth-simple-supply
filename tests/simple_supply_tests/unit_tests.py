@@ -21,25 +21,22 @@ from urllib.request import urlopen
 from urllib.error import HTTPError
 from urllib.error import URLError
 
-from sawtooth_cli.rest_client import RestClient
-
-from sawtooth_rest_api.protobuf import batch_pb2
-
-from sawtooth_signing import create_context
-from sawtooth_signing import CryptoFactory
-
-from simple_supply_rest_api import transaction_creation
 
 
-def make_key():
-    context = create_context('secp256k1')
-    private_key = context.new_random_private_key()
-    signer = CryptoFactory(context).new_signer(private_key)
-    return signer
+
+
+
+
+from SimpleSupplyClient import SimpleSupplyClient
+
+
+
+
+from makekey import make_key
 
 
 REST_URL = 'rest-api:8008'
-BATCH_KEY = make_key()
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -49,6 +46,7 @@ class SimpleSupplyTest(unittest.TestCase):
     def setUpClass(cls):
         wait_for_rest_apis([REST_URL])
         cls.client = SimpleSupplyClient(REST_URL)
+
         cls.signer1 = make_key()
         cls.signer2 = make_key()
         cls.bad_signer = make_key()
@@ -299,59 +297,7 @@ class SimpleSupplyTest(unittest.TestCase):
             "INVALID",
             "Longitude must be between -180 and 180. Got -181")
 
-class SimpleSupplyClient(object):
 
-    def __init__(self, url):
-        self._client = RestClient(base_url="http://{}".format(url))
-
-    def create_agent(self, key, name, timestamp):
-        batch = transaction_creation.make_create_agent_transaction(
-            transaction_signer=key,
-            batch_signer=BATCH_KEY,
-            name=name,
-            timestamp=timestamp)
-        batch_id = batch.header_signature
-        batch_list = batch_pb2.BatchList(batches=[batch])
-        self._client.send_batches(batch_list)
-        return self._client.get_statuses([batch_id], wait=10)
-
-    def create_record(self, key, latitude, longitude, record_id, timestamp):
-        batch = transaction_creation.make_create_record_transaction(
-            transaction_signer=key,
-            batch_signer=BATCH_KEY,
-            latitude=latitude,
-            longitude=longitude,
-            record_id=record_id,
-            timestamp=timestamp)
-        batch_id = batch.header_signature
-        batch_list = batch_pb2.BatchList(batches=[batch])
-        self._client.send_batches(batch_list)
-        return self._client.get_statuses([batch_id], wait=10)
-
-    def transfer_record(self, key, receiving_agent, record_id, timestamp):
-        batch = transaction_creation.make_transfer_record_transaction(
-            transaction_signer=key,
-            batch_signer=BATCH_KEY,
-            receiving_agent=receiving_agent,
-            record_id=record_id,
-            timestamp=timestamp)
-        batch_id = batch.header_signature
-        batch_list = batch_pb2.BatchList(batches=[batch])
-        self._client.send_batches(batch_list)
-        return self._client.get_statuses([batch_id], wait=10)
-
-    def update_record(self, key, latitude, longitude, record_id, timestamp):
-        batch = transaction_creation.make_update_record_transaction(
-            transaction_signer=key,
-            batch_signer=BATCH_KEY,
-            latitude=latitude,
-            longitude=longitude,
-            record_id=record_id,
-            timestamp=timestamp)
-        batch_id = batch.header_signature
-        batch_list = batch_pb2.BatchList(batches=[batch])
-        self._client.send_batches(batch_list)
-        return self._client.get_statuses([batch_id], wait=10)
 
 def wait_until_status(url, status_code=200, tries=5):
     """Pause the program until the given url returns the required status.

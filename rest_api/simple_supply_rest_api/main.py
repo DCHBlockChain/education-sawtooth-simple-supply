@@ -28,6 +28,7 @@ from simple_supply_rest_api.route_handler import RouteHandler
 from simple_supply_rest_api.database import Database
 from simple_supply_rest_api.messaging import Messenger
 
+from .views import SiteHandler
 
 LOGGER = logging.getLogger(__name__)
 
@@ -90,6 +91,9 @@ def start_rest_api(host, port, messenger, database):
     messenger.open_validator_connection()
 
     handler = RouteHandler(loop, messenger, database)
+    fileHandler=SiteHandler()
+
+    app.router.add_route('POST', '/fileuploader', fileHandler.uploader, name='uploader')
 
     app.router.add_post('/authentication', handler.authenticate)
 

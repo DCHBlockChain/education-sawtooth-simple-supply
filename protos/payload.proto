@@ -22,6 +22,9 @@ message SimpleSupplyPayload{
         CREATE_RECORD = 1;
         UPDATE_RECORD = 2;
         TRANSFER_RECORD = 3;
+        UPLOAD_FILE = 4;
+        TRANSFER_FILE = 5;
+        REMOVE_FILE = 6;
     }
 
     // Whether the payload contains a create agent, create record,
@@ -66,11 +69,28 @@ message UpdateRecordAction {
     sint64 longitude = 3;
 }
 
-
 message TransferRecordAction {
     // The id of the record for the ownership transfer
     string record_id = 1;
 
     // The public key of the agent to which the record will be transferred
+    string receiving_agent = 2;
+}
+
+message UploadFileAction {
+    // The id of the file to be uploaded
+    string file_id = 1;
+}
+
+message RemoveFileAction {
+    // The id of the file to be removed.
+    string file_id = 1;
+}
+
+message TransferFileAction {
+    // The id of the file for the ownership transfer
+    string file_id = 1;
+
+    // The public key of the agent to which the file will be transferred
     string receiving_agent = 2;
 }
