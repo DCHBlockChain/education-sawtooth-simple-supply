@@ -32,7 +32,11 @@ message File {
     string file_store_location = 2;
 
     // Ordered oldest to newest by timestamp
+    // The owners who have owned the file.
     repeated Owner owners = 3;
+
+    // Owners who can only view the file.
+    repeated Owner viewers = 4;
 }
 
 
