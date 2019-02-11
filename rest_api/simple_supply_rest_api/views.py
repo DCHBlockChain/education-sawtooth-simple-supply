@@ -4,7 +4,7 @@ from typing import Dict
 
 # import aiohttp_jinja2
 from aiohttp import web
-
+from aiohttp.web import json_response
 # from .worker import predict
 # from .utils import Config
 
@@ -25,9 +25,12 @@ class SiteHandler:
 
         print(" >>>dna raw data", raw_data)
         LOGGER.info(" >>>dna raw data", raw_data)
+        LOGGER.info(' >>>dna raw data || %s', raw_data)
         # executor = request.app['executor']
         # r = self._loop.run_in_executor
         # raw_data = await r(executor, predict, raw_data)
         # raw_data = predict(raw_data)
         headers = {'Content-Type': 'application/json'}
-        return web.Response(body=raw_data, headers=headers)
+        #return web.Response(body=raw_data, headers=headers)
+
+        return json_response({'result': 'SUCCESS'})
