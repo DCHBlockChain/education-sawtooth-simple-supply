@@ -23,9 +23,9 @@ message SimpleSupplyPayload{
         UPDATE_RECORD = 2;
         TRANSFER_RECORD = 3;
         UPLOAD_FILE = 4;
-        TRANSFER_FILE = 5;
-        REMOVE_FILE = 6;
-        SHARE_FILE = 7;
+        SHARE_FILE = 5;
+        TRANSFER_FILE = 6;
+        REMOVE_FILE = 7;
     }
 
     // Whether the payload contains a create agent, create record,

@@ -25,18 +25,22 @@ message File {
         uint64 timestamp = 2;
     }
 
+    // The user-defined natural key which identifies the object in the
+    // real world (for example a unique hash)
     string file_id = 1;
 
-    // The user-defined natural key which identifies the object in the
-    // real world (for example a serial number)
+    // The location that physically stores the file (such as file system path, database location, network location ...)
     string file_store_location = 2;
+
+    // The timestamp when the file is first created.
+    uint64 timestamp = 3;
 
     // Ordered oldest to newest by timestamp
     // The owners who have owned the file.
-    repeated Owner owners = 3;
+    repeated Owner owners = 4;
 
     // Owners who can only view the file.
-    repeated Owner viewers = 4;
+    repeated Owner viewers = 5;
 }
 
 
