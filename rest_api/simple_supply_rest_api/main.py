@@ -114,7 +114,8 @@ def start_rest_api(host, port, messenger, database):
         host=host,
         port=port,
         access_log=LOGGER,
-        access_log_format='%r: %s status, %b size, in %Tf s')
+        access_log_format='%r: %s status, %b size, in %Tf s'
+    )
 
 
 def main():

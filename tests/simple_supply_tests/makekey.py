@@ -6,3 +6,9 @@ def make_key():
     private_key = context.new_random_private_key()
     signer = CryptoFactory(context).new_signer(private_key)
     return signer
+
+
+
+# sinner=make_key()
+#
+# print("sinner",sinner)
