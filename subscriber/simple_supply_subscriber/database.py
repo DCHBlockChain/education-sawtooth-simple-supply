@@ -84,6 +84,7 @@ CREATE_AGENT_STMTS = """
 CREATE TABLE IF NOT EXISTS agents (
     id               bigserial PRIMARY KEY,
     public_key       varchar,
+    email            varchar,
     name             varchar,
     timestamp        bigint,
     start_block_num  bigint,
