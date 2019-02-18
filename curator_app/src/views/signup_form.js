@@ -26,7 +26,7 @@ const api = require('../services/api')
 const agentSubmitter = state => e => {
   e.preventDefault()
 
-  const agentKeys = ['name', 'password']
+  const agentKeys = ['email', 'name', 'password']
   const agent = _.pick(state, agentKeys)
 
   api.post('agents', agent)
@@ -42,6 +42,7 @@ const SignupForm = {
     return m('.signup-form', [
       m('form', { onsubmit: agentSubmitter(vnode.state) },
       m('legend', 'Create Agent'),
+      forms.textInput(setter('email'), 'Email Address'),
       forms.textInput(setter('name'), 'Name'),
       forms.passwordInput(setter('password'), 'Password'),
       m('.container.text-center',

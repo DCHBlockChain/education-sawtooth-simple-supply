@@ -71,7 +71,7 @@ class RouteHandler(object):
             name=body.get('name'),
             timestamp=get_time())
 
-        email = body.get['email']
+        email = body.get('email')
         encrypted_private_key = encrypt_private_key(
             request.app['aes_key'], public_key, private_key)
         hashed_password = hash_password(body.get('password'))
