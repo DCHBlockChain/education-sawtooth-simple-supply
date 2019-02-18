@@ -72,17 +72,20 @@ class Database(object):
         self._conn.close()
 
     async def create_auth_entry(self,
+                                email,
                                 public_key,
                                 encrypted_private_key,
                                 hashed_password):
         insert = """
         INSERT INTO auth (
+            email,
             public_key,
             encrypted_private_key,
             hashed_password
         )
-        VALUES ('{}', '{}', '{}');
+        VALUES ('{}', '{}', '{}', '{}');
         """.format(
+            email,
             public_key,
             encrypted_private_key.hex(),
             hashed_password.hex())

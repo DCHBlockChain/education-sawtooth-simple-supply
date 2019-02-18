@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS blocks (
 
 CREATE_AUTH_STMTS = """
 CREATE TABLE IF NOT EXISTS auth (
-    public_key            varchar PRIMARY KEY,
+    email                 varchar primary KEY,
+    public_key            varchar,
     hashed_password       varchar,
     encrypted_private_key varchar
 )

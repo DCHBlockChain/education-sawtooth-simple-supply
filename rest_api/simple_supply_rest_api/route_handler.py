@@ -39,13 +39,13 @@ class RouteHandler(object):
 
     async def authenticate(self, request):
         body = await decode_request(request)
-        required_fields = ['public_key', 'password']
+        required_fields = ['email', 'password']
         validate_fields(required_fields, body)
 
         password = bytes(body.get('password'), 'utf-8')
 
         auth_info = await self._database.fetch_auth_resource(
-            body.get('public_key'))
+            body.get('email'))
         if auth_info is None:
             raise ApiUnauthorized('No agent with that public key exists')
 
@@ -75,8 +75,8 @@ class RouteHandler(object):
             request.app['aes_key'], public_key, private_key)
         hashed_password = hash_password(body.get('password'))
 
-        await self._database.create_auth_entry(
-            public_key, encrypted_private_key, hashed_password)
+        await self._database.create_auth_entry(email,
+                                               public_key, encrypted_private_key, hashed_password)
 
         token = generate_auth_token(
             request.app['secret_key'], public_key)
