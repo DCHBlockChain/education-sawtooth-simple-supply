@@ -20,11 +20,13 @@ message Agent {
     // The agent's unique public key
     string public_key = 1;
 
+    string email = 2;
+
     // A human-readable name identifying the agent
-    string name = 2;
+    string name = 3;
 
     // Approximately when the agent was registered, as a Unix UTC timestamp
-    uint64 timestamp = 3;
+    uint64 timestamp = 4;
 }
 
 

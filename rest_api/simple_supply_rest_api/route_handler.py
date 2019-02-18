@@ -60,13 +60,14 @@ class RouteHandler(object):
 
     async def create_agent(self, request):
         body = await decode_request(request)
-        required_fields = ['name', 'password']
+        required_fields = ['email', 'name', 'password']
         validate_fields(required_fields, body)
 
         public_key, private_key = self._messenger.get_new_key_pair()
 
         await self._messenger.send_create_agent_transaction(
             private_key=private_key,
+            email=body.get('email'),
             name=body.get('name'),
             timestamp=get_time())
 

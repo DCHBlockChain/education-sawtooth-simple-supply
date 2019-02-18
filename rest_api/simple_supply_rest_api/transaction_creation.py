@@ -25,6 +25,7 @@ from simple_supply_protobuf import payload_pb2
 
 def make_create_agent_transaction(transaction_signer,
                                   batch_signer,
+                                  email,
                                   name,
                                   timestamp):
     """Make a CreateAgentAction transaction and wrap it in a batch
@@ -47,7 +48,7 @@ def make_create_agent_transaction(transaction_signer,
 
     outputs = [agent_address]
 
-    action = payload_pb2.CreateAgentAction(name=name)
+    action = payload_pb2.CreateAgentAction(email=email, name=name)
 
     payload = payload_pb2.SimpleSupplyPayload(
         action=payload_pb2.SimpleSupplyPayload.CREATE_AGENT,
