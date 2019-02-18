@@ -54,7 +54,7 @@ class RouteHandler(object):
             raise ApiUnauthorized('Incorrect public key or password')
 
         token = generate_auth_token(
-            request.app['secret_key'], body.get('public_key'))
+            request.app['secret_key'], auth_info.get('public_key'))
 
         return json_response({'authorization': token})
 
@@ -71,6 +71,7 @@ class RouteHandler(object):
             name=body.get('name'),
             timestamp=get_time())
 
+        email = body.get['email']
         encrypted_private_key = encrypt_private_key(
             request.app['aes_key'], public_key, private_key)
         hashed_password = hash_password(body.get('password'))
