@@ -44,14 +44,14 @@ class RouteHandler(object):
 
         password = bytes(body.get('password'), 'utf-8')
 
-        auth_info = await self._database.fetch_auth_resource(
+        auth_info = await self._database.fetch_auth_resource_by_email(
             body.get('email'))
         if auth_info is None:
-            raise ApiUnauthorized('No agent with that public key exists')
+            raise ApiUnauthorized('No agent with that email exists')
 
         hashed_password = auth_info.get('hashed_password')
         if not bcrypt.checkpw(password, bytes.fromhex(hashed_password)):
-            raise ApiUnauthorized('Incorrect public key or password')
+            raise ApiUnauthorized('Incorrect email or password')
 
         token = generate_auth_token(
             request.app['secret_key'], auth_info.get('public_key'))
@@ -178,7 +178,7 @@ class RouteHandler(object):
             raise ApiUnauthorized('Invalid auth token')
         public_key = token_dict.get('public_key')
 
-        auth_resource = await self._database.fetch_auth_resource(public_key)
+        auth_resource = await self._database.fetch_auth_resource_by_public_key(public_key)
         if auth_resource is None:
             raise ApiUnauthorized('Token is not associated with an agent')
         return decrypt_private_key(request.app['aes_key'],

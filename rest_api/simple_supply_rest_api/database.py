@@ -97,7 +97,7 @@ class Database(object):
 
     async def fetch_agent_resource(self, public_key):
         fetch = """
-        SELECT public_key, name, timestamp FROM agents
+        SELECT public_key, email, name, timestamp FROM agents
         WHERE public_key='{0}'
         AND ({1}) >= start_block_num
         AND ({1}) < end_block_num;
@@ -109,7 +109,7 @@ class Database(object):
 
     async def fetch_all_agent_resources(self):
         fetch = """
-        SELECT public_key, name, timestamp FROM agents
+        SELECT public_key, email, name, timestamp FROM agents
         WHERE ({0}) >= start_block_num
         AND ({0}) < end_block_num;
         """.format(LATEST_BLOCK_NUM)
@@ -118,10 +118,19 @@ class Database(object):
             await cursor.execute(fetch)
             return await cursor.fetchall()
 
-    async def fetch_auth_resource(self, public_key):
+    async def fetch_auth_resource_by_email(self, email):
         fetch = """
-        SELECT * FROM auth WHERE public_key='{}'
-        """.format(public_key)
+        SELECT * FROM auth WHERE email='{}'
+        """.format(email)
+
+        async with self._conn.cursor(cursor_factory=RealDictCursor) as cursor:
+            await cursor.execute(fetch)
+            return await cursor.fetchone()
+
+    async def fetch_auth_resource_by_public_key(self, public_key):
+        fetch = """
+            SELECT * FROM auth WHERE public_key='{}'
+            """.format(public_key)
 
         async with self._conn.cursor(cursor_factory=RealDictCursor) as cursor:
             await cursor.execute(fetch)
