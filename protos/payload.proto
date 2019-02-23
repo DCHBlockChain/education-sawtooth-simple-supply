@@ -45,8 +45,9 @@ message SimpleSupplyPayload{
 
 
 message CreateAgentAction {
+    string email = 1;
     // A human-readable name identifying the new agent
-    string name = 1;
+    string name = 2;
 }
 
 

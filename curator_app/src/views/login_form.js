@@ -34,7 +34,7 @@ const LoginForm = {
         onsubmit: (e) => {
           e.preventDefault()
           const credentials = {
-            public_key: vnode.state.publicKey,
+            email: vnode.state.email,
             password: vnode.state.password
           }
           api.post('authentication', credentials)
@@ -46,7 +46,7 @@ const LoginForm = {
         }
       },
       m('legend', 'Login Agent'),
-      forms.textInput(setter('publicKey'), 'Public Key'),
+      forms.textInput(setter('email'), 'Email Address'),
       forms.passwordInput(setter('password'), 'Password'),
       m('container.text-center',
         'Or you can ',

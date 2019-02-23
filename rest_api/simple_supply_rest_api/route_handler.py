@@ -39,43 +39,45 @@ class RouteHandler(object):
 
     async def authenticate(self, request):
         body = await decode_request(request)
-        required_fields = ['public_key', 'password']
+        required_fields = ['email', 'password']
         validate_fields(required_fields, body)
 
         password = bytes(body.get('password'), 'utf-8')
 
-        auth_info = await self._database.fetch_auth_resource(
-            body.get('public_key'))
+        auth_info = await self._database.fetch_auth_resource_by_email(
+            body.get('email'))
         if auth_info is None:
-            raise ApiUnauthorized('No agent with that public key exists')
+            raise ApiUnauthorized('No agent with that email exists')
 
         hashed_password = auth_info.get('hashed_password')
         if not bcrypt.checkpw(password, bytes.fromhex(hashed_password)):
-            raise ApiUnauthorized('Incorrect public key or password')
+            raise ApiUnauthorized('Incorrect email or password')
 
         token = generate_auth_token(
-            request.app['secret_key'], body.get('public_key'))
+            request.app['secret_key'], auth_info.get('public_key'))
 
         return json_response({'authorization': token})
 
     async def create_agent(self, request):
         body = await decode_request(request)
-        required_fields = ['name', 'password']
+        required_fields = ['email', 'name', 'password']
         validate_fields(required_fields, body)
 
         public_key, private_key = self._messenger.get_new_key_pair()
 
         await self._messenger.send_create_agent_transaction(
             private_key=private_key,
+            email=body.get('email'),
             name=body.get('name'),
             timestamp=get_time())
 
+        email = body.get('email')
         encrypted_private_key = encrypt_private_key(
             request.app['aes_key'], public_key, private_key)
         hashed_password = hash_password(body.get('password'))
 
-        await self._database.create_auth_entry(
-            public_key, encrypted_private_key, hashed_password)
+        await self._database.create_auth_entry(email,
+                                               public_key, encrypted_private_key, hashed_password)
 
         token = generate_auth_token(
             request.app['secret_key'], public_key)
@@ -176,7 +178,7 @@ class RouteHandler(object):
             raise ApiUnauthorized('Invalid auth token')
         public_key = token_dict.get('public_key')
 
-        auth_resource = await self._database.fetch_auth_resource(public_key)
+        auth_resource = await self._database.fetch_auth_resource_by_public_key(public_key)
         if auth_resource is None:
             raise ApiUnauthorized('Token is not associated with an agent')
         return decrypt_private_key(request.app['aes_key'],

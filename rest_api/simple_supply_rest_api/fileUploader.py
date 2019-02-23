@@ -5,13 +5,13 @@ from minio.error import (ResponseError, BucketAlreadyOwnedByYou,
 
 # Initialize minioClient with an endpoint and access/secret keys.
 minioClient = Minio('127.0.0.1:9000',
-                    access_key='Q3AM3UQ867SPQQA43P2F',
-                    secret_key='zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG',
+                    access_key='POTKQ9EF35VUUF56JIUW',
+                    secret_key='o6UhcpCDTQaiD9bcNXbFMlaSgXUGGdazx9+AMyPJ',
                     secure=False)
 
 # Make a bucket with the make_bucket API call.
 try:
-       minioClient.make_bucket("dnadata", location="us-east-1")
+       minioClient.make_bucket("dnadata2", location="us-east-1")
 except BucketAlreadyOwnedByYou as err:
        pass
 except BucketAlreadyExists as err:
@@ -21,6 +21,7 @@ except ResponseError as err:
 else:
         # Put an object 'pumaserver_debug.log' with contents from 'pumaserver_debug.log'.
         try:
-               minioClient.fput_object('maylogs', 'pumaserver_debug.log', '/tmp/pumaserver_debug.log')
+               minioClient.fput_object('dnadata2', 'mydata.txt', '/tmp/1.txt')
         except ResponseError as err:
                print(err)
+print("done")

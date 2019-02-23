@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS blocks (
 
 CREATE_AUTH_STMTS = """
 CREATE TABLE IF NOT EXISTS auth (
-    public_key            varchar PRIMARY KEY,
+    email                 varchar primary KEY,
+    public_key            varchar,
     hashed_password       varchar,
     encrypted_private_key varchar
 )
@@ -44,6 +45,11 @@ CREATE_RECORD_STMTS = """
 CREATE TABLE IF NOT EXISTS records (
     id               bigserial PRIMARY KEY,
     record_id        varchar,
+    object_name      varchar,
+    last_modified    timestamp,
+    etag             varchar,
+    size             bigint,
+    content_type     varchar,
     start_block_num  bigint,
     end_block_num    bigint
 );
@@ -79,6 +85,7 @@ CREATE_AGENT_STMTS = """
 CREATE TABLE IF NOT EXISTS agents (
     id               bigserial PRIMARY KEY,
     public_key       varchar,
+    email            varchar,
     name             varchar,
     timestamp        bigint,
     start_block_num  bigint,
@@ -249,13 +256,15 @@ class Database(object):
         insert_agent = """
         INSERT INTO agents (
         public_key,
+        email,
         name,
         timestamp,
         start_block_num,
         end_block_num)
-        VALUES ('{}', '{}', '{}', '{}', '{}');
+        VALUES ('{}', '{}', '{}', '{}', '{}', '{}');
         """.format(
             agent_dict['public_key'],
+            agent_dict['email'],
             agent_dict['name'],
             agent_dict['timestamp'],
             agent_dict['start_block_num'],
