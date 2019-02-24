@@ -26,6 +26,7 @@
             <el-menu-item index="4" >Technology Introduction</el-menu-item>
             <el-menu-item index="5" >About Us</el-menu-item>
             <el-menu-item index="6" @click="login">Login</el-menu-item>
+            <el-menu-item index="7" @click="signup">Signup</el-menu-item>
             <!--<el-menu-item v-if="path !== '/' && path !== '/login'" index="2" @click="signup">Signup</el-menu-item>-->
         </el-menu>
         <el-menu v-if="sessionActive" class="el-menu-demo" mode="horizontal">
@@ -89,14 +90,15 @@
                 // this.$store.commit('setSessionActive', { flag: true });
                 this.$router.push('/login');
             },
+            signup () {
+                // this.$store.commit('setSessionActive', { flag: true });
+                this.$router.push('/signup');
+            },
             logout () {
                 util.invalidateJWTSession(this);
             },
             marketplace () {
                 this.$router.push('/marketplace');
-            },
-            signup () {
-                this.$router.push('/signup');
             },
             toIndustryAdvantage () {
                 this.$router.push('/#industryAdvantage')

@@ -1,13 +1,16 @@
 <template>
     <div id="appsignup" align="center">
         <el-col :span="9"  style="margin-top: 50px">
-            <h1 class="title" style="color: #5564ff;">SignUp</h1>
+            <h1 class="title" style="color: #0098FF">SignUp</h1>
             <el-form :model="form_data" status-icon  :rules="rules" ref="form_data" label-width="120px" class="demo-ruleForm">
-                <el-form-item  prop="first_name" auto-complete="off" required>
+                <!-- <el-form-item  prop="first_name" auto-complete="off" required>
                     <el-input v-model="form_data.first_name" placeholder="FirstName"></el-input>
                 </el-form-item>
                 <el-form-item prop="last_name" required>
                     <el-input v-model="form_data.last_name" auto-complete="off" placeholder="LastName"></el-input>
+                </el-form-item> -->
+                <el-form-item prop="name" required>
+                    <el-input v-model="form_data.name" auto-complete="off" placeholder="Name"></el-input>
                 </el-form-item>
                 <el-form-item prop="email" required>
                     <el-input v-model="form_data.email" auto-complete="off" placeholder="Email"></el-input>
@@ -18,15 +21,15 @@
                 <el-form-item prop="confirm_encoded_password" required>
                     <el-input type="password" v-model="form_data.confirm_encoded_password" auto-complete="off" placeholder="Confirm Password"></el-input>
                 </el-form-item>
-                <el-form-item prop="zip_code" auto-complete="off" required>
+                <!-- <el-form-item prop="zip_code" auto-complete="off" required>
                     <el-input v-model="form_data.zip_code" placeholder="ZipCode"></el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item prop="terms_condition" auto-complete="off" required>
                     <el-checkbox v-model="form_data.terms_condition">I agree to Terms of service and Privacy Policy</el-checkbox>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="submitForm('form_data')" style="background-color: #5564ff;color:white">Submit</el-button>
-                    <el-button @click="resetForm('form_data')" style="background-color: #5564ff;color:white">Reset</el-button>
+                    <el-button @click="submitForm('form_data')" style="width: 30%;background-color: #0098FF;color: white">Submit</el-button>
+                    <el-button @click="resetForm('form_data')" style="width: 30%;background-color: #0098FF;color: white">Reset</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -38,17 +41,17 @@
 
     export default {
         created(){
-            if(this.$route.params.signup_token) {
-                let query = {
-                    "signup_token": this.$route.params.signup_token
-                };
-                console.log("verifySignupToken: ", query);
-                verifySignupToken(this, query);
-            }
-            else {
-                this.$message.warning("This site is currently available to a select few users.");
-                this.$router.push("/");
-            }
+            // if(this.$route.params.signup_token) {
+            //     let query = {
+            //         "signup_token": this.$route.params.signup_token
+            //     };
+            //     console.log("verifySignupToken: ", query);
+            //     verifySignupToken(this, query);
+            // }
+            // else {
+            //     this.$message.warning("This site is currently available to a select few users.");
+            //     this.$router.push("/");
+            // }
         },
         data () {
 
@@ -143,6 +146,7 @@
             return {
                 isFormValidated : false,
                 form_data: {
+                    name: '',
                     email: '',
                     first_name: '',
                     last_name: '',
