@@ -15,6 +15,7 @@
 import datetime
 from json.decoder import JSONDecodeError
 import logging
+from psycopg2 import IntegrityError
 import time
 
 from aiohttp.web import json_response
@@ -64,20 +65,23 @@ class RouteHandler(object):
         validate_fields(required_fields, body)
 
         public_key, private_key = self._messenger.get_new_key_pair()
+        email = body.get('email')
 
         await self._messenger.send_create_agent_transaction(
             private_key=private_key,
-            email=body.get('email'),
+            email=email,
             name=body.get('name'),
             timestamp=get_time())
 
-        email = body.get('email')
         encrypted_private_key = encrypt_private_key(
             request.app['aes_key'], public_key, private_key)
         hashed_password = hash_password(body.get('password'))
 
-        await self._database.create_auth_entry(email,
+        try:
+            await self._database.create_auth_entry(email,
                                                public_key, encrypted_private_key, hashed_password)
+        except IntegrityError:
+            raise ApiBadRequest('The Email address has already been used!')
 
         token = generate_auth_token(
             request.app['secret_key'], public_key)
