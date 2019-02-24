@@ -12,10 +12,11 @@ class SimpleSupplyClient(object):
     def __init__(self, url):
         self._client = RestClient(base_url="http://{}".format(url))
 
-    def create_agent(self, key, name, timestamp):
+    def create_agent(self, key, email, name, timestamp):
         batch = transaction_creation.make_create_agent_transaction(
             transaction_signer=key,
             batch_signer=BATCH_KEY,
+            email=email,
             name=name,
             timestamp=timestamp)
         batch_id = batch.header_signature

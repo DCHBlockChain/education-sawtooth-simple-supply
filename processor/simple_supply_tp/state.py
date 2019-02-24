@@ -45,17 +45,18 @@ class SimpleSupplyState(object):
 
         return None
 
-    def set_agent(self, public_key, name, timestamp):
+    def set_agent(self, public_key, email, name, timestamp):
         """Creates a new agent in state
 
         Args:
             public_key (str): The public key of the agent
+            email (str): The email address of the agent
             name (str): The human-readable name of the agent
             timestamp (int): Unix UTC timestamp of when the agent was created
         """
         address = addresser.get_agent_address(public_key)
         agent = agent_pb2.Agent(
-            public_key=public_key, name=name, timestamp=timestamp)
+            public_key=public_key, email=email, name=name, timestamp=timestamp)
         container = agent_pb2.AgentContainer()
         state_entries = self._context.get_state(
             addresses=[address], timeout=self._timeout)

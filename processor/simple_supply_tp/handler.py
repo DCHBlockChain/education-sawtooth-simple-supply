@@ -85,6 +85,7 @@ def _create_agent(state, public_key, payload):
                                  'exists'.format(public_key))
     state.set_agent(
         public_key=public_key,
+        email=payload.data.email,
         name=payload.data.name,
         timestamp=payload.timestamp)
 

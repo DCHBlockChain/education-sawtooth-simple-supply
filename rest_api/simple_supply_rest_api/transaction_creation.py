@@ -33,6 +33,7 @@ def make_create_agent_transaction(transaction_signer,
     Args:
         transaction_signer (sawtooth_signing.Signer): The transaction key pair
         batch_signer (sawtooth_signing.Signer): The batch key pair
+        email (str): The email address of the agent
         name (str): The agent's name
         timestamp (int): Unix UTC timestamp of when the agent is created
 
