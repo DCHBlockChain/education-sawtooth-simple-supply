@@ -15,12 +15,12 @@
                 <el-form-item prop="email" required>
                     <el-input v-model="form_data.email" auto-complete="off" placeholder="Email"></el-input>
                 </el-form-item>
-                <el-form-item prop="encoded_password" required>
-                    <el-input type="password" v-model="form_data.encoded_password" auto-complete="off" placeholder="Password"></el-input>
+                <el-form-item prop="password" required>
+                    <el-input type="password" v-model="form_data.password" auto-complete="off" placeholder="Password"></el-input>
                 </el-form-item>
-                <el-form-item prop="confirm_encoded_password" required>
+                <!-- <el-form-item prop="confirm_encoded_password" required>
                     <el-input type="password" v-model="form_data.confirm_encoded_password" auto-complete="off" placeholder="Confirm Password"></el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <!-- <el-form-item prop="zip_code" auto-complete="off" required>
                     <el-input v-model="form_data.zip_code" placeholder="ZipCode"></el-input>
                 </el-form-item> -->
@@ -105,36 +105,36 @@
                 }
             });
 
-            let checkConfirmPassword = ((rule, value, callback)=>{
-                let re_password = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
-                if (!value) {
-                    return callback(new Error('Please enter password'));
-                }
-                else if (!re_password.test(value)) {
-                    callback(new Error('Password does not match'));
-                }
-                else if (value !== this.form_data.encoded_password) {
-                    callback(new Error('Passwords does not match'));
-                }
-                else {
-                    callback();
-                }
-            });
+            // let checkConfirmPassword = ((rule, value, callback)=>{
+            //     let re_password = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+            //     if (!value) {
+            //         return callback(new Error('Please enter password'));
+            //     }
+            //     else if (!re_password.test(value)) {
+            //         callback(new Error('Password does not match'));
+            //     }
+            //     else if (value !== this.form_data.encoded_password) {
+            //         callback(new Error('Passwords does not match'));
+            //     }
+            //     else {
+            //         callback();
+            //     }
+            // });
 
-            let checkZipCode = ((rule, value, callback) => {
-                let re_zip = new RegExp("^\\d{5}$");
-                if(value){
-                    if(!re_zip.test(value)){
-                        callback(new Error("Incorrect ZipCode. Correct Format: e.g. '54653'"))
-                    }
-                    else {
-                        callback();
-                    }
-                }
-                else {
-                    callback(new Error("Enter ZipCode"));
-                }
-            });
+            // let checkZipCode = ((rule, value, callback) => {
+            //     let re_zip = new RegExp("^\\d{5}$");
+            //     if(value){
+            //         if(!re_zip.test(value)){
+            //             callback(new Error("Incorrect ZipCode. Correct Format: e.g. '54653'"))
+            //         }
+            //         else {
+            //             callback();
+            //         }
+            //     }
+            //     else {
+            //         callback(new Error("Enter ZipCode"));
+            //     }
+            // });
 
             let checkTermsCondition = ((rule, value, callback)=>{
                 if(value){
@@ -148,12 +148,12 @@
                 form_data: {
                     name: '',
                     email: '',
-                    first_name: '',
-                    last_name: '',
-                    zip_code: '',
-                    encoded_password: '',
-                    confirm_encoded_password: '',
-                    terms_condition: false
+                    // first_name: '',
+                    // last_name: '',
+                    // zip_code: '',
+                    password: '',
+                    // confirm_encoded_password: '',
+                    // terms_condition: false
                 },
                 rules: {
                     email: [
@@ -168,18 +168,18 @@
                         { validator: checkLastName, trigger: 'change'},
                         { validator: checkLastName, trigger: 'blur'}
                     ],
-                    encoded_password: [
+                    password: [
                         { validator: checkPassword, trigger: 'change' },
                         { validator: checkPassword, trigger: 'blur' }
                     ],
-                    confirm_encoded_password: [
-                        { validator: checkConfirmPassword, trigger: 'change' },
-                        { validator: checkConfirmPassword, trigger: 'blur' }
-                    ],
-                    zip_code: [
-                        { validator: checkZipCode, trigger: 'change'},
-                        { validator: checkZipCode, trigger: 'blur'}
-                    ],
+                    // confirm_encoded_password: [
+                    //     { validator: checkConfirmPassword, trigger: 'change' },
+                    //     { validator: checkConfirmPassword, trigger: 'blur' }
+                    // ],
+                    // zip_code: [
+                    //     { validator: checkZipCode, trigger: 'change'},
+                    //     { validator: checkZipCode, trigger: 'blur'}
+                    // ],
                     terms_condition: [
                         { validator: checkTermsCondition, trigger: 'change'}
                     ]
