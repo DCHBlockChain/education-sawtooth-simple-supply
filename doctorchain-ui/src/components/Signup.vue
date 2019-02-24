@@ -121,20 +121,20 @@
                 }
             });
 
-            let checkZipCode = ((rule, value, callback) => {
-                let re_zip = new RegExp("^\\d{5}$");
-                if(value){
-                    if(!re_zip.test(value)){
-                        callback(new Error("Incorrect ZipCode. Correct Format: e.g. '54653'"))
-                    }
-                    else {
-                        callback();
-                    }
-                }
-                else {
-                    callback(new Error("Enter ZipCode"));
-                }
-            });
+            // let checkZipCode = ((rule, value, callback) => {
+            //     let re_zip = new RegExp("^\\d{5}$");
+            //     if(value){
+            //         if(!re_zip.test(value)){
+            //             callback(new Error("Incorrect ZipCode. Correct Format: e.g. '54653'"))
+            //         }
+            //         else {
+            //             callback();
+            //         }
+            //     }
+            //     else {
+            //         callback(new Error("Enter ZipCode"));
+            //     }
+            // });
 
             let checkTermsCondition = ((rule, value, callback)=>{
                 if(value){
@@ -148,9 +148,9 @@
                 form_data: {
                     name: '',
                     email: '',
-                    first_name: '',
-                    last_name: '',
-                    zip_code: '',
+                    // first_name: '',
+                    // last_name: '',
+                    // zip_code: '',
                     encoded_password: '',
                     confirm_encoded_password: '',
                     terms_condition: false
@@ -176,10 +176,10 @@
                         { validator: checkConfirmPassword, trigger: 'change' },
                         { validator: checkConfirmPassword, trigger: 'blur' }
                     ],
-                    zip_code: [
-                        { validator: checkZipCode, trigger: 'change'},
-                        { validator: checkZipCode, trigger: 'blur'}
-                    ],
+                    // zip_code: [
+                    //     { validator: checkZipCode, trigger: 'change'},
+                    //     { validator: checkZipCode, trigger: 'blur'}
+                    // ],
                     terms_condition: [
                         { validator: checkTermsCondition, trigger: 'change'}
                     ]
