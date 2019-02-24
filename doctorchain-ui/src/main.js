@@ -22,7 +22,8 @@ Vue.use(VueRouter);
 const routes = [
     { path: '/', component: Homepage },
     { path: '/marketplace', component: Marketplace },
-    { path: '/signup/:signup_token', component: Signup },
+    //{ path: '/signup/:signup_token', component: Signup },
+    { path: '/signup', component: Signup },
     { path: '/login', component: Login },
     { path: '/forgotpassword', component: ForgotPassword },
     { path: '/forgotpassword/:token', component: UpdatePassword },
